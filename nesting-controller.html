@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nesting Controller</title>
+    <script src="angular-min.js"></script>
+    <style>
+        div {
+            border: 2px solid rgb(17, 146, 168);
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="ctrl1">
+        View Ctr1:<input type="text" ng-model="msg" ng-change="toChild()">
+        <div ng-controller="ctrl2">
+            View Ctr2:<input type="text" ng-model="msg" ng-change="toParentAndChild()">
+            <div ng-controller="ctrl3">
+                View Ctr3:<input type="text" ng-model="msg" ng-change="toParent()">
+            </div>
+        </div>
+    </div>
+    <script>
+        angular.module("myApp", [])
+            .controller("ctrl1", function ($scope) {
+                $scope.msg = "welcome to angularjs";
+                $scope.$on("toParent", function (event, data) {
+                    $scope.msg = data;
+
+                });
+
+                $scope.toChild = function () {
+                    $scope.$broadcast("toChild", $scope.msg)
+                }
+            })
+            .controller("ctrl2", function ($scope) {
+                $scope.$on("toParent", function (event, data) {
+                    $scope.msg = data;
+
+                })
+                $scope.$on("toChild", function (event, data) {
+                    $scope.msg = data;
+
+                })
+
+                $scope.toParentAndChild = function () {
+                    $scope.$emit("toParent", $scope.msg);
+                    $scope.$broadcast("toChild", $scope.msg);
+                }
+
+            })
+            .controller("ctrl3", function ($scope) {
+                $scope.toParent = function () {
+                    $scope.$emit("toParent", $scope.msg)
+                }
+                $scope.$on("toChild", function (event, data) {
+                    $scope.msg = data;
+
+                })
+            })
+   
+    </script>
+
+
+
+
+
+</body>
+
+</html>
