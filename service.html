@@ -1,0 +1,31 @@
+<html ng-app="demo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ng service examples</title>
+  <script src="node_modules/angular/angular.js"></script>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="service.js"></script>
+  <script src="StringService.js"></script>
+
+</head>
+<body ng-controller="demoCtrl">
+   <table>
+       <tr>
+         <td>Your String</td>
+         <td> <input type="text" ng-model="input"></td>
+       </tr>
+       <tr>
+         <td>Result</td>
+        <td> <input type="text" ng-model="output"></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td>
+          <input type="button" value="Processing String" ng-click="transformString(input)">
+         </td>
+       </tr>
+       
+   </table>
+</body>
+</html>
